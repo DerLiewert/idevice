@@ -11,7 +11,7 @@ import {
   Button,
   Checkbox,
 } from "@/shared/ui";
-import { deleteSpecificationsGroup } from "../../api/specifications-groups";
+import { deleteSpecificationsGroup } from "../../api/specifications-groups-api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { EditGroupDialog } from "../edit-group-dialog";
@@ -65,7 +65,6 @@ export const SpecificationsGroupsList = ({
                 value={item.id}
                 className="min-h-9 max-w-full rounded-none px-10"
                 onFocus={() => setFocusedTab(i)}
-                onClick={(e) => console.log(e)}
               >
                 <span className="overflow-hidden" title={item.name}>
                   {item.name}

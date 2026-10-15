@@ -174,7 +174,7 @@ export const FormSpecification = ({
         </Field>
 
         <Button className="mt-6.75 w-60" type="submit">
-          Добавить характеристику
+          {role === "add" ? "Добавить характеристику" : "Сохранить изменения"}
         </Button>
       </FieldGroup>
     </form>

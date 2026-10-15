@@ -69,7 +69,7 @@ const fieldVariants = cva(
   },
 );
 
-function  Field({
+function Field({
   className,
   orientation = "vertical",
   ...props
@@ -134,7 +134,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
       data-slot="field-description"
       className={cn(
         "text-muted-foreground text-left text-sm leading-normal font-normal group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
-        "last:mt-0 nth-last-2:-mt-1",
+        // "last:mt-0 nth-last-2:-mt-1",
         "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
         className,
       )}
@@ -177,9 +177,11 @@ function FieldError({
   className,
   children,
   errors,
+  withMark = true,
   ...props
 }: React.ComponentProps<"div"> & {
   errors?: Array<{ message?: string } | undefined>;
+  withMark?: boolean;
 }) {
   const content = useMemo(() => {
     if (children) {
@@ -219,7 +221,7 @@ function FieldError({
       className={cn("text-destructive text-sm font-normal", className)}
       {...props}
     >
-      {content}
+      {withMark && "*"} {content}
     </div>
   );
 }

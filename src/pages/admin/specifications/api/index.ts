@@ -1,2 +1,2 @@
-export * from './specifications'
-export * from './specifications-groups'
+export * from "./specifications-api";
+export * from "./specifications-groups-api";

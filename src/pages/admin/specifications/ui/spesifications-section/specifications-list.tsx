@@ -4,7 +4,7 @@ import { useState } from "react";
 import { TabsContent, Checkbox } from "@/shared/ui";
 import { ActionDropdownMenu } from "../action-dropdown-menu";
 import { EditSpecificationDialog } from "../edit-specification-dialog";
-import { deleteSpecification } from "../../api/specifications";
+import { deleteSpecification } from "../../api/specifications-api";
 import {
   useSearchStore,
   SpecificationGroup,
@@ -51,11 +51,7 @@ export const SpecificationsList = ({
         const isEmpty = searchedGroupItems.length === 0;
 
         return (
-          <TabsContent
-            className="max-h-60 overflow-y-auto"
-            key={group.id}
-            value={group.id}
-          >
+          <TabsContent className="h-full" key={group.id} value={group.id}>
             {isEmpty ? (
               <div className="flex h-full items-center justify-center text-center">
                 {groupItems.length > 0

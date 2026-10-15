@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
+import { Toaster } from "@/shared/ui/toast";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -42,8 +43,9 @@ export default function RootLayout({
     >
       <body className="h-full">
         <div className="flex min-h-full flex-col overflow-hidden">
-          <main className="flex-auto"> {children}</main>
+          <main className="flex-auto py-7"> {children}</main>
         </div>
+         <Toaster />
       </body>
     </html>
   );

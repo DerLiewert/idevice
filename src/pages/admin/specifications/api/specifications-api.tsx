@@ -1,6 +1,6 @@
 "use server";
-import { getSupabase } from "@/lib/supabase/server";
-import { SpecificationsInsert, Specification, SpecificationsUpdate } from "../model";
+import { getSupabase } from "@/shared/lib/supabase/server";
+import { SpecificationsInsert, SpecificationsUpdate } from "../model";
 
 //========== CREATE ============================================================
 export const createSpecification = async (payload: SpecificationsInsert) => {

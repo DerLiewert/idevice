@@ -1,5 +1,5 @@
 "use server";
-import { getSupabase } from "@/lib/supabase/server";
+import { getSupabase } from "@/shared/lib/supabase/server";
 import { SpecificationGroupInsert, SpecificationGroupUpdate } from "../model";
 
 //========== CREATE ============================================================

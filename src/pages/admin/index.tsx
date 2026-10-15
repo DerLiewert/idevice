@@ -5,9 +5,7 @@ export const metadata: Metadata = {
 };
 
 export const AdminPage = () => {
-  return <div>
-    
-  </div>;
+  return <div className=""></div>;
 };
 
 export default AdminPage;
