@@ -9,7 +9,13 @@ import { Button } from "@/shared/ui/button";
 import { ScrollArea } from "@base-ui/react";
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
+  return (
+    <DialogPrimitive.Root
+      data-slot="dialog"
+      {...props}
+      disablePointerDismissal
+    />
+  );
 }
 
 function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
@@ -53,7 +59,7 @@ function DialogContent({
       <DialogOverlay />
       <DialogPrimitive.Viewport className="fixed inset-0 z-50">
         <ScrollArea.Root className="h-full overscroll-contain in-[data-ending-style]:pointer-events-none">
-          <ScrollArea.Viewport className="h-full overscroll-contain in-[data-ending-style]:pointer-events-none py-10 px-4">
+          <ScrollArea.Viewport className="h-full overscroll-contain px-4 py-10 in-[data-ending-style]:pointer-events-none">
             <ScrollArea.Content className="flex min-h-full items-center justify-center">
               <DialogPrimitive.Popup
                 data-slot="dialog-content"
@@ -82,8 +88,8 @@ function DialogContent({
               </DialogPrimitive.Popup>
             </ScrollArea.Content>
           </ScrollArea.Viewport>
-          <ScrollArea.Scrollbar className="[@media(hover:hover)]:block hidden flex w-4 justify-center border-x border-x-neutral-400 bg-black/12 transition-opacity group-data-ending-style/dialog:opacity-0 in-data-nested-dialog-open:opacity-0 in-data-nested-dialog-open:duration-0 dark:bg-white/12">
-            <ScrollArea.Thumb className="w-full bg-neutral-950 dark:bg-white" />
+          <ScrollArea.Scrollbar className="hidden w-4 justify-center border-x border-r-neutral-400 border-l-white bg-white pr-px transition-opacity group-data-ending-style/dialog:opacity-0 in-data-nested-dialog-open:opacity-0 in-data-nested-dialog-open:duration-0 [@media(hover:hover)]:block">
+            <ScrollArea.Thumb className="w-full rounded-full bg-black/50" />
           </ScrollArea.Scrollbar>
         </ScrollArea.Root>
       </DialogPrimitive.Viewport>

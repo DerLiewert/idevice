@@ -1,5 +1,11 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { MoreHorizontalIcon } from "lucide-react";
+import {
+  deleteSpecificationsGroup,
+  SpecificationGroup,
+} from "@/entities/specifications-groups";
 import {
   TabsTrigger,
   DropdownMenu,
@@ -11,16 +17,10 @@ import {
   Button,
   Checkbox,
 } from "@/shared/ui";
-import { deleteSpecificationsGroup } from "../../api/specifications-groups-api";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { EditGroupDialog } from "../edit-group-dialog";
 import { useSearchStore } from "../../model/search-store";
-import {
-  ALL_SPECIFICATIONS_GROUP,
-  SpecificationGroup,
-  useCheckedStore,
-} from "../../model";
+import { CheckedPayload, useCheckedStore } from "../../model/checked-store";
+import { ALL_SPECIFICATIONS_GROUP } from "../../config/constants";
+import { EditGroupDialog } from "../edit-group-dialog";
 
 export const SpecificationsGroupsList = ({
   groups,
@@ -33,26 +33,19 @@ export const SpecificationsGroupsList = ({
     null,
   );
 
-  const searchStore = useSearchStore();
-  const searchValue = searchStore.value.toLowerCase();
-  const searchGroups =
-    searchStore.type === "groups" && searchValue
-      ? groups.filter((item) => item.name.toLowerCase().includes(searchValue))
-      : groups;
+  const { searchValues } = useSearchStore();
+  const searchValue = searchValues.groups.toLowerCase();
+  const searchGroups = searchValue
+    ? groups.filter((item) => item.name.toLowerCase().includes(searchValue))
+    : groups;
 
   const { groups: groupsChecked, setUnchecked, setChecked } = useCheckedStore();
+
   const handleCheckedChange = (id: number, checked: boolean) => {
-    if (checked) {
-      setChecked({
-        entity: "groups",
-        id,
-      });
-    } else {
-      setUnchecked({
-        entity: "groups",
-        id,
-      });
-    }
+    const checkedPayload: CheckedPayload = { entity: "groups", id };
+
+    if (checked) setChecked(checkedPayload);
+    else setUnchecked(checkedPayload);
   };
 
   return (

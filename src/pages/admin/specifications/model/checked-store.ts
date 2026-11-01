@@ -5,9 +5,10 @@ export type CheckedState = {
   specifications: Set<number>;
 };
 
+export type CheckedPayload = { entity: keyof CheckedState; id: number };
 export type CheckedActions = {
-  setChecked: (payload: { entity: keyof CheckedState; id: number }) => void;
-  setUnchecked: (payload: { entity: keyof CheckedState; id: number }) => void;
+  setChecked: (payload: CheckedPayload) => void;
+  setUnchecked: (payload: CheckedPayload) => void;
   clearChecked: (entity: keyof CheckedState) => void;
 };
 

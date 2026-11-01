@@ -1,5 +1,5 @@
-import { SpecificationGroup } from "../model";
-import { FormGroup } from "./form-group";
+import { SpecificationGroup } from "@/entities/specifications-groups";
+import { FormSpecificationGroup } from "./form-group";
 import { FormSpecification } from "./form-specification";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/shared/ui";
 
@@ -16,7 +16,7 @@ export const FormTabs = ({ groups }: { groups: SpecificationGroup[] }) => {
       </div>
 
       <TabsContent value="groups">
-        <FormGroup role="add" />
+        <FormSpecificationGroup role="add" />
       </TabsContent>
       <TabsContent value="specifications">
         <FormSpecification role="add" groups={groups} />

@@ -2,8 +2,12 @@
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { GroupFormData, GroupSchema } from "../model";
-import { createSpecificationsGroup, updateSpecificationsGroup } from "../api";
+import {
+  SpecificationsGroupFormData,
+  SpecificationsGroupSchema,
+  createSpecificationsGroup,
+  updateSpecificationsGroup,
+} from "@/entities/specifications-groups";
 import {
   Button,
   Field,
@@ -12,17 +16,21 @@ import {
   Input,
 } from "@/shared/ui";
 
-type FormGroupProps = { onSuccess?: () => void } & (
+type FormSpecificationGroupProps = { onSuccess?: () => void } & (
   | { role: "add"; defaultValues?: never; group_id?: never }
-  | { role: "edit"; defaultValues: GroupFormData; group_id: number }
+  | {
+      role: "edit";
+      defaultValues: SpecificationsGroupFormData;
+      group_id: number;
+    }
 );
 
-export const FormGroup = ({
+export const FormSpecificationGroup = ({
   onSuccess,
   defaultValues,
   role,
   group_id,
-}: FormGroupProps) => {
+}: FormSpecificationGroupProps) => {
   const router = useRouter();
 
   const {
@@ -32,13 +40,15 @@ export const FormGroup = ({
     handleSubmit,
     reset,
   } = useForm({
-    resolver: zodResolver(GroupSchema),
+    resolver: zodResolver(SpecificationsGroupSchema),
     defaultValues: defaultValues ?? {
       name: "",
     },
   });
 
-  const handleFormSubmit: SubmitHandler<GroupFormData> = async (data) => {
+  const handleFormSubmit: SubmitHandler<SpecificationsGroupFormData> = async (
+    data,
+  ) => {
     try {
       if (role === "add") await createSpecificationsGroup(data);
       else await updateSpecificationsGroup(group_id, data);

@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCheckedStore } from "../../model";
-import { deleteSpecifications, deleteSpecificationsGroups } from "../../api";
+import { deleteSpecifications } from "@/entities/specifications";
+import { deleteSpecificationsGroups } from "@/entities/specifications-groups";
 import {
   Button,
   Dialog,
@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui";
+import { useCheckedStore } from "../../model/checked-store";
 
 const actionOptions = [
   { value: "delete-groups", label: "Удалить выбранные группы" },

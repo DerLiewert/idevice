@@ -1,1 +1,1 @@
-export * from "./spesifications-section";
+export {SpecificationsSection} from './specifications-section'

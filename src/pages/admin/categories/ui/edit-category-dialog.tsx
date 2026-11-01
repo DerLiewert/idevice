@@ -1,6 +1,7 @@
 import { DialogContent, DialogHeader, Dialog, DialogTitle } from "@/shared/ui";
 import { CategoryForm } from "./category-form";
-import { CategoryFull } from "../model";
+import { toFormDefaults } from "@/entities/categories/api/mappers";
+import { CategoryFull } from "@/entities/categories";
 
 interface EditCategoryDialogProps {
   item: CategoryFull | null;
@@ -29,15 +30,7 @@ export const EditCategoryDialog = ({
           <CategoryForm
             role="edit"
             id={item.id}
-            defaultValues={{
-              ...item,
-              image: item.image
-                ? {
-                    type: "existing",
-                    ...item.image,
-                  }
-                : undefined,
-            }}
+            defaultValues={toFormDefaults(item)}
             onSuccess={onSuccess}
           />
         )}

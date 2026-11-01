@@ -1,6 +1,7 @@
 "use client";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { UploadImage } from "./upload-image";
+import { useRouter } from "next/navigation";
+import { Controller, DefaultValues, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Field,
   FieldLegend,
@@ -10,18 +11,12 @@ import {
   FieldError,
   toast,
 } from "@/shared/ui";
-import { createCategory, updateCategory } from "../api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { CategoryFormData, CategorySchema, ExistingImage } from "../model";
 import { generateSlug } from "@/shared/lib";
-
-type CategoryEditFormData = Omit<CategoryFormData, "image"> & {
-  image?: ExistingImage;
-};
+import { UploadImage } from "./upload-image";
+import { CategoryFormData, CategorySchema, createCategory, updateCategory } from "@/entities/categories";
 
 type CategoryFormProps = { className?: string; onSuccess?: () => void } & (
-  | { role: "edit"; defaultValues: CategoryEditFormData; id: number }
+  | { role: "edit"; defaultValues: DefaultValues<CategoryFormData> ; id: number }
   | { role: "add"; defaultValues?: never; id?: number }
 );
 // mode: {type: "edit"; id: number; defaultValues: CategoryEditFormData}
@@ -47,6 +42,7 @@ export const CategoryForm = ({
     defaultValues: defaultValues || {
       name: "",
       slug: "",
+      image: { type: "new" },
     },
   });
 
@@ -74,15 +70,15 @@ export const CategoryForm = ({
         return;
       }
 
-      successToastText = "Категория успешно создана :)";
+      successToastText = "Категория успешно добавлена";
     } else if (role === "edit") {
       try {
         await updateCategory(id, data);
-        successToastText = "Категория успешно обновлена ;)";
+        successToastText = "Категория успешно обновлена";
       } catch (error) {
         toast.add({
           type: "error",
-          description: "Не удалось обновить категорию :(",
+          description: "Не удалось обновить категорию",
           priority: "high",
         });
       }

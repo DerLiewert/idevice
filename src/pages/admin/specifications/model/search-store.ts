@@ -1,26 +1,34 @@
 // src/stores/counter-store.ts
 import { create } from "zustand";
-import { SearchType } from "./constants";
+import { SearchType } from "../config/constants";
 
 export type SearchState = {
-  type: SearchType;
-  value: string;
+  searchValues: Record<SearchType, string>;
 };
 
 export type SearchActions = {
-  setSearch: (payload: SearchState) => void;
-  clearSearch: () => void;
+  setSearchValue: (type: SearchType, value: string) => void;
+  clearSearch: (type?: SearchType) => void;
 };
 
 export type SearchStore = SearchState & SearchActions;
 
 export const initSearchState: SearchState = {
-  type: "groups",
-  value: "",
+  searchValues: { groups: "", specifications: "" },
 };
 
 export const useSearchStore = create<SearchStore>((set) => ({
   ...initSearchState,
-  setSearch: (payload) => set((state) => ({ ...state, ...payload })),
-  clearSearch: () => set(() => initSearchState),
+  setSearchValue: (type, value) =>
+    set((state) => ({
+      ...state,
+      values: { ...state.searchValues, [type]: value },
+    })),
+  clearSearch: (type) =>
+    set((state) => ({
+      ...state,
+      values: type
+        ? { ...state.searchValues, [type]: "" }
+        : initSearchState.searchValues,
+    })),
 }));

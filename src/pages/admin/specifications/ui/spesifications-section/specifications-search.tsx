@@ -1,12 +1,6 @@
 "use client";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  SearchFormData,
-  SearchSchema,
-  SearchType,
-  useSearchStore,
-} from "../../model";
+import { useState } from "react";
+import { cn } from "cn";
 import {
   SelectContent,
   Select,
@@ -14,88 +8,63 @@ import {
   SelectValue,
   SelectGroup,
   SelectItem,
-  Input,
-  Button,
   Field,
-  FieldError,
+  SearchInput,
+  Button,
 } from "@/shared/ui";
-import { cn } from "cn";
-
-const searchTypeOptions: { value: SearchType; label: string }[] = [
-  { value: "groups", label: "Группы характеристик" },
-  { value: "specifications", label: "Характеристики" },
-];
+import { useSearchStore } from "../../model/search-store";
+import { searchTypeOptions } from "../../config/constants";
 
 export const SpecificationsSearch = ({ className }: { className?: string }) => {
-  const { type, value, setSearch } = useSearchStore();
-
-  const { handleSubmit, control } = useForm({
-    resolver: zodResolver(SearchSchema),
-    defaultValues: { type, value },
-  });
-
-  const onSubmit: SubmitHandler<SearchFormData> = (data) => {
-    setSearch(data);
-  };
+  const { searchValues, setSearchValue, clearSearch } = useSearchStore();
+  const [selectedType, setSelectedType] = useState(searchTypeOptions[0].value);
 
   return (
-    <form
-      className={cn("flex gap-3", className)}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <div className={cn("flex gap-3", className)}>
       <div className="flex gap-3">
         <p className="inline-flex h-8 items-center text-nowrap">Поиск по</p>
-        <Controller
-          control={control}
-          name="type"
-          render={({ field, fieldState, formState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <Select
-                name={field.name}
-                items={searchTypeOptions}
-                defaultValue={
-                  formState.defaultValues
-                    ? formState.defaultValues.type
-                    : searchTypeOptions[0].value
-                }
-                onValueChange={field.onChange}
-              >
-                <SelectTrigger
-                  className="min-w-60"
-                  aria-invalid={fieldState.invalid}
-                >
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {searchTypeOptions.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
+        <Field>
+          <Select
+            items={searchTypeOptions}
+            value={selectedType}
+            onValueChange={(type) => {
+              if (!type) return;
+              setSelectedType(type);
+              setSearchValue(type, searchValues[type]);
+            }}
+          >
+            <SelectTrigger className="min-w-60">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {searchTypeOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </Field>
       </div>
 
-      <Controller
-        name={"value"}
-        control={control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <Input {...field} type="search" aria-invalid={fieldState.invalid} />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
+      <Field>
+        <SearchInput
+          value={searchValues[selectedType]}
+          onChange={(value) => {
+            setSearchValue(selectedType, value);
+          }}
+        />
+      </Field>
 
-      <Button className="basis-50" type="submit">
-        Поиск
+      <Button
+        variant="destructive"
+        className="w-40"
+        onClick={() => clearSearch()}
+      >
+        Очистить все
       </Button>
-    </form>
+    </div>
   );
 };

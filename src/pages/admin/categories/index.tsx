@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { PageHeader } from "../ui";
-import { CategoryForm, DataViewer } from "./ui";
-import { getCategories } from "./api";
+import { CategoryForm } from "./ui/category-form";
+import { DataViewer } from "./ui/data-viewer";
+import { getCategories } from "@/entities/categories";
+import { PageHeader } from "@/shared/ui/page-header";
 
 export const metadata: Metadata = {
   title: "iDevise | Админ | Категории",
@@ -17,7 +18,7 @@ export const CategoriesPage = async () => {
       />
       <div className="container">
         <div className="flex gap-12.5">
-          <CategoryForm className="basis-122.5" role="add"/>
+          <CategoryForm className="basis-122.5" role="add" />
           <DataViewer
             className="w-full max-w-220 flex-1"
             categories={categories}

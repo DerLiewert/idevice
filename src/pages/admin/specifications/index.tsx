@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { SpecificationsSection, FormTabs } from "./ui";
-import { getSpecificationsGroups, getSpecifications } from "./api";
-import { PageHeader } from "../ui";
+import { getSpecificationsGroups } from "@/entities/specifications-groups";
+import { getSpecifications } from "@/entities/specifications";
+import { PageHeader } from "@/shared/ui/page-header";
+import { FormTabs } from "./ui/form-tabs";
+import { SpecificationsSection } from "./ui/spesifications-section";
 
 export const metadata: Metadata = {
   title: "iDevise | Админ | Характеристики",

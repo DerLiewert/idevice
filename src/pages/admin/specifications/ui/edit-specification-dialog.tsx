@@ -1,6 +1,7 @@
 import { Dialog, DialogContent } from "@/shared/ui";
 import { FormSpecification } from "./form-specification";
-import { SpecificationGroup, SpecificationResponse } from "../model";
+import { SpecificationResponse } from "@/entities/specifications";
+import { SpecificationGroup } from "@/entities/specifications-groups";
 
 type EditGroupDialog = {
   onClose: () => void;

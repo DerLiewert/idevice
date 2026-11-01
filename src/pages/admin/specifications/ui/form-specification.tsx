@@ -2,12 +2,13 @@
 import { useRouter } from "next/navigation";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createSpecification, updateSpecification } from "../api";
+import { SpecificationGroup } from "@/entities/specifications-groups";
 import {
+  createSpecification,
+  updateSpecification,
   SpecificationFormData,
-  SpecificationGroup,
   SpecificationSchema,
-} from "../model";
+} from "@/entities/specifications";
 import {
   Button,
   Field,
@@ -67,10 +68,10 @@ export const FormSpecification = ({
     },
   });
 
-  const groupsOptions = [
-    { id: null, name: "Choose department" },
-    ...groups,
-  ].map((group) => ({ label: group.name, value: group.id }));
+  const groupsOptions = groups.map((group) => ({
+    label: group.name,
+    value: group.id,
+  }));
 
   const handleFormSubmit: SubmitHandler<SpecificationFormData> = async (
     data,
@@ -113,7 +114,7 @@ export const FormSpecification = ({
                 onValueChange={field.onChange}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Выберите характеристику" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>

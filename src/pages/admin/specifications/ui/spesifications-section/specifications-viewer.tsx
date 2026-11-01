@@ -1,4 +1,5 @@
-import { SpecificationGroup, SpecificationResponse } from "../../model";
+import { SpecificationGroup } from "@/entities/specifications-groups";
+import { SpecificationResponse } from "@/entities/specifications";
 import { SpecificationsGroupsList } from "./specifications-groups-list";
 import { SpecificationsList } from "./specifications-list";
 import { Tabs } from "@/shared/ui";
@@ -28,7 +29,7 @@ export const SpecificationsViewer = ({
         <div className="bg-green-600 p-2.5 text-white">
           Характеристики {/*  <span className="opacity-70">(Display)</span> */}
         </div>
-        <div className="max-h-62.75 h-full overflow-y-auto">
+        <div className="h-full max-h-62.75 overflow-y-auto">
           <SpecificationsList groups={groups} specifications={specifications} />
         </div>
       </div>

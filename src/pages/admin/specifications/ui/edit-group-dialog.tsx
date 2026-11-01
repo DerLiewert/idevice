@@ -1,6 +1,6 @@
+import { SpecificationGroup } from "@/entities/specifications-groups";
 import { Dialog, DialogContent } from "@/shared/ui";
-import { FormGroup } from "./form-group";
-import { SpecificationGroup } from "../model";
+import { FormSpecificationGroup } from "./form-group";
 
 type EditGroupDialog = {
   item: SpecificationGroup | null;
@@ -17,7 +17,7 @@ export const EditGroupDialog = ({ item, onClose }: EditGroupDialog) => {
     >
       <DialogContent>
         {item && (
-          <FormGroup
+          <FormSpecificationGroup
             role="edit"
             onSuccess={onClose}
             defaultValues={item}

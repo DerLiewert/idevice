@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CameraIcon, SquarePenIcon, TrashIcon } from "lucide-react";
+import { CameraIcon, SquarePenIcon } from "lucide-react";
 import { cn } from "cn";
 import {
   DialogContent,
@@ -17,9 +17,9 @@ import {
   DialogClose,
   FieldDescription,
 } from "@/shared/ui";
-import { CategoryFormData } from "../model";
-import { useObjectUrl } from "../lib";
+import { useObjectUrl } from "../lib/use-object-url";
 import Image from "next/image";
+import { CategoryFormData } from "@/entities/categories";
 
 type UploadImageProps = {
   className?: string;
@@ -28,6 +28,7 @@ type UploadImageProps = {
   onChange: (image: CategoryFormData["image"]) => void;
   isInvalid?: boolean;
 };
+
 export const UploadImage = ({
   className,
   name,
@@ -103,7 +104,7 @@ export const UploadImage = ({
           )}
         </label>
 
-        {image && (
+        {image && (image.type === "existing" ? image.src : image.file) && (
           <Button
             type="button"
             variant="outline"

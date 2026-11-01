@@ -1,17 +1,16 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { TabsContent, Checkbox } from "@/shared/ui";
-import { ActionDropdownMenu } from "../action-dropdown-menu";
+import { TabsContent, ActionDropdownMenu, Checkbox } from "@/shared/ui";
 import { EditSpecificationDialog } from "../edit-specification-dialog";
-import { deleteSpecification } from "../../api/specifications-api";
 import {
-  useSearchStore,
-  SpecificationGroup,
+  deleteSpecification,
   SpecificationResponse,
-  ALL_SPECIFICATIONS_GROUP,
-  useCheckedStore,
-} from "../../model";
+} from "@/entities/specifications";
+import { SpecificationGroup } from "@/entities/specifications-groups";
+import { useSearchStore } from "../../model/search-store";
+import { ALL_SPECIFICATIONS_GROUP } from "../../config/constants";
+import { useCheckedStore } from "../../model/checked-store";
 
 export const SpecificationsList = ({
   groups,
@@ -23,9 +22,10 @@ export const SpecificationsList = ({
   const router = useRouter();
   const [editableItem, setEdditableItem] =
     useState<SpecificationResponse | null>(null);
-  const searchStore = useSearchStore();
-  const searchValue = searchStore.value.toLowerCase();
-  const isSearching = searchStore.type === "specifications" && searchValue;
+
+  const { searchValues } = useSearchStore();
+  const searchValue = searchValues.specifications.toLowerCase();
+  const isSearching = !!searchValue;
 
   const handleDelete = async (id: number) => {
     await deleteSpecification(id);
@@ -55,7 +55,7 @@ export const SpecificationsList = ({
             {isEmpty ? (
               <div className="flex h-full items-center justify-center text-center">
                 {groupItems.length > 0
-                  ? `Не найдено характеристик содержащих "${searchStore.value}"`
+                  ? `Не найдено характеристик содержащих "${searchValues.specifications}"`
                   : `Пока не добавлено никаких характеристик ${group.id === ALL_SPECIFICATIONS_GROUP.id ? "для всех групп" : `для группы "${group.name}"`}`}
               </div>
             ) : (

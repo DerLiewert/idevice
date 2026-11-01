@@ -1,0 +1,1 @@
+export type { SpecificationGroup } from "../model/types";
